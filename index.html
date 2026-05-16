@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Commercialista Pizzoleo – Bologna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2744;
+      --navy-dark: #111c33;
+      --navy-light: #2e4070;
+      --gold: #b8963e;
+      --gold-light: #d4b06a;
+      --cream: #f8f7f4;
+      --cream2: #edeae2;
+      --text: #2a3040;
+      --serif: 'Libre Baskerville', Georgia, serif;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--text); background: #fff; overflow-x: hidden; }
+
+    /* ── BANNER ACQUISTO ── */
+    #buy-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99999;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 130px;
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 400;
+      gap: 24px;
+    }
+    #buy-banner .buy-text { flex: 1; line-height: 1.45; }
+    #buy-banner .buy-text strong { font-size: 22px; }
+    #buy-banner .buy-text .desktop { display: inline; }
+    #buy-banner .buy-text .mobile { display: none; }
+    #buy-banner .buy-cta {
+      display: inline-block;
+      background: #ff4d00;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      padding: 18px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    #buy-banner .buy-cta:hover { background: #e04400; transform: scale(1.03); }
+    @media(max-width:700px){
+      #buy-banner { padding: 0 18px; font-size: 15px; height: 110px; gap: 16px; }
+      #buy-banner .buy-text strong { font-size: 17px; }
+      #buy-banner .buy-text .desktop { display: none; }
+      #buy-banner .buy-text .mobile { display: inline; }
+      #buy-banner .buy-cta { font-size: 14px; padding: 14px 20px; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 130px; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled { background: rgba(26,39,68,0.97); box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
+    .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: #fff; text-decoration: none; letter-spacing: 0.02em; line-height: 1.3; }
+    .nav-logo span { display: block; font-size: 0.75rem; font-family: var(--sans); font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold-light); }
+    @media(max-width:650px){ .nav-links { display: none; } }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 130px;
+    }
+    #hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.35);
+      transform: scale(1.04);
+      transition: transform 9s ease;
+    }
+    #hero:hover #hero-bg { transform: scale(1.0); }
+    #hero-content { position: relative; text-align: center; color: #fff; padding: 0 24px; max-width: 860px; }
+    .hero-eyebrow { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 22px; }
+    #hero-content h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4.8rem); font-weight: 400; line-height: 1.2; margin-bottom: 6px; }
+    #hero-content h1 em { font-style: italic; color: var(--gold-light); }
+    .hero-divider { width: 60px; height: 1px; background: var(--gold); margin: 28px auto; }
+    #hero-content p { font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.82); margin-bottom: 40px; line-height: 1.7; }
+    .btn-hero { display: inline-block; padding: 15px 44px; border: 1px solid var(--gold); color: var(--gold-light); font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; transition: background 0.3s, color 0.3s; }
+    .btn-hero:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .hero-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .hero-scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom, rgba(184,150,62,0.9), transparent); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* ── SEZIONI COMUNI ── */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .section-title { font-family: var(--serif); font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 400; color: var(--navy-dark); line-height: 1.25; margin-bottom: 18px; }
+    .section-title em { font-style: italic; color: var(--navy-light); }
+    .section-subtitle { font-size: 15px; font-weight: 300; color: #5a6070; line-height: 1.75; max-width: 560px; }
+    .navy-line { width: 48px; height: 1px; background: var(--gold); margin: 24px 0; }
+
+    /* ── NUMERI ── */
+    #numeri { background: var(--navy); padding: 80px 24px; }
+    #numeri .section-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; }
+    .numero-val { font-family: var(--serif); font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 400; color: var(--gold-light); line-height: 1; }
+    .numero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 12px; }
+    @media(max-width:640px){ #numeri .section-inner { grid-template-columns: repeat(2,1fr); gap: 32px; } }
+
+    /* ── SERVIZI ── */
+    #servizi { background: var(--cream); }
+    .servizi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
+    .servizio-card { background: #fff; padding: 40px 32px; position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; border-top: 3px solid transparent; }
+    .servizio-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.07); border-top-color: var(--navy); }
+    .servizio-num { font-family: var(--serif); font-size: 3rem; font-weight: 400; color: var(--cream2); line-height: 1; margin-bottom: 20px; }
+    .servizio-name { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 10px; }
+    .servizio-desc { font-size: 13.5px; font-weight: 300; color: #5a6070; line-height: 1.65; margin-bottom: 24px; }
+    .servizio-price { display: inline-block; font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--navy); border: 1px solid var(--cream2); padding: 6px 18px; background: var(--cream); }
+    @media(max-width:900px){ .servizi-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:580px){ .servizi-grid { grid-template-columns: 1fr; } }
+
+    /* ── CHI SIAMO ── */
+    .chi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .chi-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .chi-photo { overflow: hidden; aspect-ratio: 3/4; }
+    .chi-photo:first-child { grid-column: 1 / -1; aspect-ratio: 16/9; }
+    .chi-photo img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.05) brightness(0.96); transition: transform 0.6s ease, filter 0.4s; }
+    .chi-photo:hover img { transform: scale(1.04); filter: sepia(0) brightness(1); }
+    .chi-feature { display: flex; gap: 16px; margin-bottom: 28px; }
+    .chi-feature-icon { width: 36px; height: 36px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 14px; }
+    .chi-feature-text h4 { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 4px; }
+    .chi-feature-text p { font-size: 13.5px; font-weight: 300; color: #5a6070; line-height: 1.6; }
+    @media(max-width:780px){ .chi-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    /* ── GALLERIA ── */
+    #galleria { background: var(--navy-dark); padding: 80px 24px; }
+    #galleria .section-title { color: #fff; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 260px 260px; gap: 10px; margin-top: 48px; }
+    .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+    .gallery-item:first-child { grid-column: 1 / 2; grid-row: 1 / 3; }
+    .gallery-item:nth-child(4) { grid-column: 3 / 4; grid-row: 1 / 3; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease, filter 0.4s; filter: brightness(0.85); }
+    .gallery-item:hover img { transform: scale(1.06); filter: brightness(1); }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,39,68,0.5), transparent); opacity: 0; transition: opacity 0.3s; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    @media(max-width:700px){
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child, .gallery-item:nth-child(4) { grid-column: auto; grid-row: auto; }
+      .gallery-item { height: 200px; }
+    }
+
+    /* ── TESTIMONIANZE ── */
+    #testimonianze { background: var(--cream); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+    .testi-card { background: #fff; padding: 36px 30px; border-left: 3px solid var(--navy); }
+    .testi-quote { font-family: var(--serif); font-size: 5rem; line-height: 0.6; color: var(--cream2); margin-bottom: 20px; display: block; }
+    .testi-text { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; font-style: italic; color: var(--navy-dark); line-height: 1.75; margin-bottom: 24px; }
+    .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+    .testi-author { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8090a8; }
+    @media(max-width:820px){ .testi-grid { grid-template-columns: 1fr; } }
+
+    /* ── ORARI ── */
+    .orari-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; margin-top: 56px; }
+    .orari-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--cream2); }
+    .orari-row:last-child { border-bottom: none; }
+    .orari-day { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--navy-dark); }
+    .orari-time { font-size: 13.5px; font-weight: 400; color: #5a6070; }
+    .orari-time.closed { color: #b0bac8; font-style: italic; }
+    .orari-note { background: var(--navy); padding: 36px; color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.75; }
+    .orari-note-title { color: var(--gold-light); font-family: var(--serif); font-size: 1.1rem; display: block; margin-bottom: 10px; }
+    @media(max-width:720px){ .orari-wrapper { grid-template-columns: 1fr; } }
+
+    /* ── FAQ ── */
+    #faq { background: var(--cream); }
+    .faq-list { margin-top: 56px; max-width: 800px; }
+    .faq-item { border-bottom: 1px solid var(--cream2); }
+    .faq-btn { width: 100%; background: none; border: none; display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; text-align: left; gap: 16px; }
+    .faq-q { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--navy-dark); }
+    .faq-icon { width: 28px; height: 28px; border: 1px solid var(--navy-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-size: 18px; transition: transform 0.3s; line-height: 1; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-answer p { font-size: 14.5px; font-weight: 300; color: #5a6070; line-height: 1.75; padding-bottom: 24px; }
+
+    /* ── MAPPA ── */
+    #mappa { padding: 0; }
+    .mappa-wrapper { position: relative; }
+    .mappa-card { position: absolute; top: 40px; left: 40px; z-index: 10; background: var(--navy); color: #fff; padding: 32px 36px; max-width: 290px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .mappa-card h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--gold-light); margin-bottom: 14px; line-height: 1.35; }
+    .mappa-info { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.85; }
+    .mappa-info strong { color: #fff; font-weight: 500; }
+    #mappa iframe { width: 100%; height: 480px; border: none; display: block; filter: grayscale(0.2); }
+    @media(max-width:600px){ .mappa-card { position: static; max-width: 100%; } }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy-dark); color: rgba(255,255,255,0.5); padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 32px; }
+    .footer-brand h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--gold-light); margin-bottom: 6px; }
+    .footer-brand .footer-subtitle { font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+    .footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; }
+    .footer-privacy-btn { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: var(--sans); transition: color 0.2s; }
+    .footer-privacy-btn:hover { color: var(--gold-light); }
+    @media(max-width:720px){ .footer-top { grid-template-columns: 1fr; } }
+
+    /* ── PRIVACY MODAL ── */
+    #privacy-modal { display: none; position: fixed; inset: 0; z-index: 999999; background: rgba(0,0,0,0.78); align-items: center; justify-content: center; padding: 24px; }
+    #privacy-modal.open { display: flex; }
+    .modal-box { background: #fff; max-width: 700px; width: 100%; max-height: 82vh; overflow-y: auto; padding: 48px; position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 24px; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--navy); line-height: 1; }
+    .modal-box h2 { font-family: var(--serif); font-size: 2rem; margin-bottom: 24px; color: var(--navy-dark); }
+    .modal-box h3 { font-family: var(--serif); font-size: 1.15rem; color: var(--navy-dark); margin: 24px 0 10px; }
+    .modal-box p { font-size: 14px; line-height: 1.78; color: #5a5f6a; margin-bottom: 12px; }
+
+    /* ── WHATSAPP ── */
+    #wa-btn { position: fixed; bottom: 28px; right: 28px; z-index: 9000; width: 58px; height: 58px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.45); text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; }
+    #wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    #wa-btn svg { width: 30px; height: 30px; fill: #fff; position: relative; z-index: 1; }
+    .wa-pulse { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; background: #25D366; animation: waPulse 2.2s ease-out infinite; }
+    @keyframes waPulse { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.75);opacity:0} }
+  </style>
+</head>
+<body>
+
+<!-- BANNER ACQUISTO -->
+<div id="buy-banner">
+  <span class="buy-text">
+    <span class="desktop">Ti piace questo sito? Il tuo potrebbe essere identico — online in 5 giorni per <strong>€99</strong></span>
+    <span class="mobile">Vuoi un sito così? <strong>€99</strong></span>
+  </span>
+  <a class="buy-cta" href="https://buy.stripe.com/8x25kC7mo39M0bN1Mv1B601" target="_blank" rel="noopener">Inizia ora →</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    Dott. Raffaele Pizzoleo
+    <span>Dottore Commercialista · Bologna</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi sono</a></li>
+    <li><a href="#galleria">Studio</a></li>
+    <li><a href="#orari">Orari</a></li>
+    <li><a href="#mappa">Contatti</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div id="hero-content">
+    <p class="hero-eyebrow">Bologna · Via Guerrazzi 18 · Commercialista</p>
+    <h1>Studio<br><em>Pizzoleo</em></h1>
+    <div class="hero-divider"></div>
+    <p>Consulenza fiscale, contabile e societaria per privati e imprese.<br>Professionalità, riservatezza e soluzioni su misura.</p>
+    <a href="#servizi" class="btn-hero">Scopri i servizi</a>
+  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div>Scorri</div>
+</section>
+
+<!-- NUMERI -->
+<section id="numeri">
+  <div class="section-inner">
+    <div class="numero-item"><div class="numero-val">20+</div><div class="numero-label">Anni di esperienza</div></div>
+    <div class="numero-item"><div class="numero-val">500+</div><div class="numero-label">Clienti seguiti</div></div>
+    <div class="numero-item"><div class="numero-val">100%</div><div class="numero-label">Riservatezza</div></div>
+    <div class="numero-item"><div class="numero-val">Bologna</div><div class="numero-label">Via Guerrazzi, 18</div></div>
+  </div>
+</section>
+
+<!-- SERVIZI -->
+<section id="servizi">
+  <div class="section-inner">
+    <p class="section-label">Area di competenza</p>
+    <h2 class="section-title">Servizi professionali<br><em>per ogni esigenza</em></h2>
+    <div class="navy-line"></div>
+    <p class="section-subtitle">Assistenza fiscale, contabile e consulenza strategica per persone fisiche, professionisti, società e imprese di ogni dimensione.</p>
+    <div class="servizi-grid">
+      <div class="servizio-card">
+        <div class="servizio-num">01</div>
+        <div class="servizio-name">Dichiarazioni dei redditi</div>
+        <div class="servizio-desc">Compilazione e invio di 730, Modello Redditi PF e SP. Assistenza per lavoratori dipendenti, autonomi, affitti e redditi esteri.</div>
+        <span class="servizio-price">da € 150</span>
+      </div>
+      <div class="servizio-card">
+        <div class="servizio-num">02</div>
+        <div class="servizio-name">Contabilità aziendale</div>
+        <div class="servizio-desc">Tenuta della contabilità ordinaria e semplificata, registrazione fatture, adempimenti IVA periodici e annuali.</div>
+        <span class="servizio-price">da € 200 / mese</span>
+      </div>
+      <div class="servizio-card">
+        <div class="servizio-num">03</div>
+        <div class="servizio-name">Consulenza fiscale</div>
+        <div class="servizio-desc">Pianificazione fiscale, ottimizzazione del carico tributario, consulenza su regimi agevolati e analisi di convenienza.</div>
+        <span class="servizio-price">€ 120 / ora</span>
+      </div>
+      <div class="servizio-card">
+        <div class="servizio-num">04</div>
+        <div class="servizio-name">Apertura Partita IVA</div>
+        <div class="servizio-desc">Scelta del regime fiscale più adatto, apertura, gestione e assistenza continua per liberi professionisti e autonomi.</div>
+        <span class="servizio-price">da € 300</span>
+      </div>
+      <div class="servizio-card">
+        <div class="servizio-num">05</div>
+        <div class="servizio-name">Bilancio e revisione</div>
+        <div class="servizio-desc">Redazione del bilancio d'esercizio, nota integrativa, deposito al Registro Imprese e adempimenti societari annuali.</div>
+        <span class="servizio-price">da € 500</span>
+      </div>
+      <div class="servizio-card">
+        <div class="servizio-num">06</div>
+        <div class="servizio-name">Consulenza societaria</div>
+        <div class="servizio-desc">Costituzione di società, modifiche statutarie, cessioni di quote, operazioni straordinarie e pianificazione successoria.</div>
+        <span class="servizio-price">da € 400</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHI SONO -->
+<section id="chi-siamo">
+  <div class="section-inner">
+    <div class="chi-grid">
+      <div class="chi-text">
+        <p class="section-label">Chi sono</p>
+        <h2 class="section-title">Dott. Raffaele<br><em>Pizzoleo</em></h2>
+        <div class="navy-line"></div>
+        <p style="font-size:15px;line-height:1.85;color:#5a6070;margin-bottom:36px;font-weight:300;">
+          Dottore Commercialista iscritto all'Ordine dei Dottori Commercialisti e degli Esperti Contabili di Bologna. Con oltre vent'anni di esperienza nel settore fiscale e contabile, offro una consulenza personalizzata e riservata a privati, professionisti e imprese, con sede nel cuore di Bologna in Via Guerrazzi.
+        </p>
+        <div class="chi-feature">
+          <div class="chi-feature-icon">✦</div>
+          <div class="chi-feature-text">
+            <h4>Iscritto all'Albo ODCEC</h4>
+            <p>Professionista abilitato e aggiornato sulle normative fiscali e contabili vigenti.</p>
+          </div>
+        </div>
+        <div class="chi-feature">
+          <div class="chi-feature-icon">✦</div>
+          <div class="chi-feature-text">
+            <h4>Consulenza personalizzata</h4>
+            <p>Ogni cliente riceve un'analisi dedicata e soluzioni costruite sulla propria situazione specifica.</p>
+          </div>
+        </div>
+        <div class="chi-feature">
+          <div class="chi-feature-icon">✦</div>
+          <div class="chi-feature-text">
+            <h4>Massima riservatezza</h4>
+            <p>Gestione dei dati sensibili con la massima discrezione e nel pieno rispetto della normativa privacy.</p>
+          </div>
+        </div>
+      </div>
+      <div class="chi-photos">
+        <div class="chi-photo">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=80&fit=crop" alt="Studio professionale" loading="lazy" />
+        </div>
+        <div class="chi-photo">
+          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80&fit=crop" alt="Documenti fiscali" loading="lazy" />
+        </div>
+        <div class="chi-photo">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&fit=crop" alt="Scrivania studio" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERIA -->
+<section id="galleria">
+  <div class="section-inner">
+    <p class="section-label">Lo studio</p>
+    <h2 class="section-title" style="color:#fff;">Un ambiente <em style="color:var(--gold-light)">professionale</em></h2>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&fit=crop" alt="Studio moderno" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=80&fit=crop" alt="Scrivania professionale" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=700&q=80&fit=crop" alt="Documenti e contabilità" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=80&fit=crop" alt="Consulenza clienti" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&fit=crop" alt="Sede Bologna" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIANZE -->
+<section id="testimonianze">
+  <div class="section-inner">
+    <p class="section-label">Cosa dicono i clienti</p>
+    <h2 class="section-title">Fiducia e<br><em>professionalità</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Il Dott. Pizzoleo segue la contabilità della mia SRL da anni con grande competenza. Sempre disponibile, preciso e propositivo. Un professionista di cui mi fido ciecamente.</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">Marco B. · Imprenditore, Bologna</div>
+      </div>
+      <div class="testi-card">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Finalmente un commercialista che spiega le cose in modo chiaro e comprensibile. Ha ottimizzato la mia situazione fiscale e mi ha fatto risparmiare in modo significativo.</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">Giulia T. · Libera professionista</div>
+      </div>
+      <div class="testi-card">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Mi ha aiutato ad aprire la partita IVA e a scegliere il regime fiscale più conveniente. Veloce, competente e sempre reperibile. Lo consiglio a tutti i giovani professionisti.</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">Luca R. · Consulente IT, Bologna</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORARI -->
+<section id="orari">
+  <div class="section-inner">
+    <p class="section-label">Orari dello studio</p>
+    <h2 class="section-title">Quando<br><em>riceve</em></h2>
+    <div class="navy-line"></div>
+    <div class="orari-wrapper">
+      <div>
+        <div class="orari-row"><span class="orari-day">Lunedì</span><span class="orari-time">09:00 – 13:00 · 14:30 – 18:00</span></div>
+        <div class="orari-row"><span class="orari-day">Martedì</span><span class="orari-time">09:00 – 13:00 · 14:30 – 18:00</span></div>
+        <div class="orari-row"><span class="orari-day">Mercoledì</span><span class="orari-time">09:00 – 13:00 · 14:30 – 18:00</span></div>
+        <div class="orari-row"><span class="orari-day">Giovedì</span><span class="orari-time">09:00 – 13:00 · 14:30 – 18:00</span></div>
+        <div class="orari-row"><span class="orari-day">Venerdì</span><span class="orari-time">09:00 – 13:00</span></div>
+        <div class="orari-row"><span class="orari-day">Sabato</span><span class="orari-time closed">Chiuso</span></div>
+        <div class="orari-row"><span class="orari-day">Domenica</span><span class="orari-time closed">Chiuso</span></div>
+      </div>
+      <div class="orari-note">
+        <span class="orari-note-title">Prenota una consulenza</span>
+        Per fissare un appuntamento o richiedere informazioni, contattaci telefonicamente o via WhatsApp. Le consulenze si svolgono in studio o da remoto.
+        <br><br>
+        <span class="orari-note-title">📍 Via Guerrazzi, 18</span>
+        40125 Bologna BO · Centro storico
+        <br><br>
+        <span class="orari-note-title">📞 +39 051 039 0610</span>
+        <br>
+        studiopizzoleo.it
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <p class="section-label">Domande frequenti</p>
+    <h2 class="section-title">Hai delle<br><em>domande?</em></h2>
+    <div class="navy-line"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Quale regime fiscale conviene scegliere per aprire la partita IVA?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Dipende dal volume di ricavi previsto e dalla tipologia di attività. Il regime forfettario è vantaggioso per chi inizia o ha ricavi fino a 85.000€, con tassazione al 15% (o 5% per i primi 5 anni). Per ricavi più elevati o strutture più complesse, può convenire il regime ordinario. Ogni situazione richiede un'analisi personalizzata.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Cosa serve portare per la dichiarazione dei redditi?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Per il 730 servono: CU del datore di lavoro, documenti di spese detraibili (mediche, interessi mutuo, assicurazioni, spese scolastiche), codice fiscale del contribuente e dei familiari a carico, e dati dell'IBAN per il rimborso. Forniremo una checklist completa su richiesta.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">È possibile ricevere consulenza da remoto?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Sì, offriamo consulenze via videochiamica e gestiamo documentazione in digitale per i clienti che preferiscono non venire fisicamente in studio. La firma digitale e lo scambio sicuro di documenti permettono di seguire tutte le pratiche anche a distanza.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Seguite anche startup e nuove imprese?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Assolutamente sì. Affianchiamo i nuovi imprenditori dalla fase di costituzione della società, alla scelta della forma giuridica più adatta, fino alla gestione contabile e fiscale ordinaria. Offriamo pacchetti dedicati per startup e piccole imprese in fase di avvio.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Come vengono gestiti i dati sensibili dei clienti?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>La gestione dei dati avviene nel pieno rispetto del GDPR e del segreto professionale. Utilizziamo sistemi di archiviazione sicuri, accesso limitato alle sole persone autorizzate e procedure di protezione dei dati aggiornate. La riservatezza è un valore fondamentale del nostro studio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAPPA -->
+<section id="mappa">
+  <div class="mappa-wrapper">
+    <div class="mappa-card">
+      <h3>Studio Dott.<br>Raffaele Pizzoleo</h3>
+      <div class="mappa-info">
+        <strong>Via Guerrazzi, 18</strong><br>
+        40125 Bologna BO<br>
+        Centro storico<br><br>
+        <strong>Tel:</strong> +39 051 039 0610<br>
+        <strong>Orari:</strong> Lun–Ven · 9:00–18:00<br>
+        <strong>Web:</strong> studiopizzoleo.it
+      </div>
+    </div>
+    <iframe
+      src="https://www.openstreetmap.org/export/embed.html?bbox=11.3490%2C44.4950%2C11.3580%2C44.5010&amp;layer=mapnik&amp;marker=44.4978%2C11.3535"
+      title="Mappa Studio Pizzoleo Bologna"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>Dott. Raffaele Pizzoleo</h2>
+        <div class="footer-subtitle">Dottore Commercialista · Bologna</div>
+        <p>Studio professionale di consulenza fiscale, contabile e societaria nel cuore di Bologna. Oltre vent'anni di esperienza al servizio di privati e imprese.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Servizi</h4>
+        <ul>
+          <li><a href="#servizi">Dichiarazione redditi</a></li>
+          <li><a href="#servizi">Contabilità</a></li>
+          <li><a href="#servizi">Consulenza fiscale</a></li>
+          <li><a href="#servizi">Partita IVA</a></li>
+          <li><a href="#servizi">Bilancio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informazioni</h4>
+        <ul>
+          <li><a href="#chi-siamo">Chi sono</a></li>
+          <li><a href="#orari">Orari</a></li>
+          <li><a href="#mappa">Dove siamo</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#" onclick="document.getElementById('privacy-modal').classList.add('open');return false;">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Studio Dott. Commercialista Raffaele Pizzoleo – Via Guerrazzi 18, 40125 Bologna</span>
+      <button class="footer-privacy-btn" onclick="document.getElementById('privacy-modal').classList.add('open')">Privacy Policy</button>
+    </div>
+  </div>
+</footer>
+
+<!-- PRIVACY MODAL -->
+<div id="privacy-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('privacy-modal').classList.remove('open')">×</button>
+    <h2>Privacy Policy</h2>
+    <p>Ai sensi del Regolamento UE 2016/679 (GDPR), questa pagina descrive le modalità di trattamento dei dati personali degli utenti che consultano questo sito web.</p>
+    <h3>Titolare del trattamento</h3>
+    <p>Studio Dott. Commercialista Raffaele Pizzoleo · Via Guerrazzi, 18 · 40125 Bologna BO · Tel: +39 051 039 0610</p>
+    <h3>Dati raccolti</h3>
+    <p>Questo sito è una pagina di presentazione statica. Non raccoglie dati personali tramite form, non utilizza cookie di profilazione, non installa cookie di terze parti né strumenti di analisi o tracciamento.</p>
+    <h3>Cookie tecnici</h3>
+    <p>Il sito non utilizza cookie propri. La mappa è fornita da OpenStreetMap (openstreetmap.org). Le immagini sono fornite da Unsplash (unsplash.com).</p>
+    <h3>Segreto professionale</h3>
+    <p>I dati dei clienti dello studio sono trattati nel rispetto del segreto professionale e delle disposizioni del GDPR, con misure di sicurezza adeguate alla natura delle informazioni gestite.</p>
+    <h3>Diritti dell'utente</h3>
+    <p>Hai diritto di accesso, rettifica, cancellazione, limitazione e portabilità dei dati. Contatta il titolare ai recapiti indicati sopra.</p>
+    <h3>Modifiche</h3>
+    <p>Questa privacy policy può essere aggiornata. Ultimo aggiornamento: maggio 2025.</p>
+  </div>
+</div>
+
+<!-- WHATSAPP STICKY -->
+<a id="wa-btn" href="https://wa.me/390510390610" target="_blank" rel="noopener" aria-label="Contattaci su WhatsApp">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 80); }, { passive: true });
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+  document.getElementById('privacy-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+</script>
+</body>
+</html>
